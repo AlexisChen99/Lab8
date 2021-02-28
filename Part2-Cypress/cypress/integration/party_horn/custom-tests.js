@@ -128,4 +128,26 @@ describe('Volume input changes when slider changes', ()=>{
       expect($el).to.have.attr("disabled", "disabled");
     })
   })
+
+  it("error is shwon when type a number outside of range in volume", () => {
+    cy.get("#volume-number").clear(0).type('-5430257');
+    cy.get("#party-horn-form").within(() => {
+      cy.get('input:invalid').should('have.length', 1);
+    })
+
+    cy.get("#volume-number").clear(0).type('100000');
+    cy.get("#party-horn-form").within(() => {
+      cy.get('input:invalid').should('have.length', 1);
+    })
+
+    cy.get("#volume-number").clear(0).type('24057203948');
+    cy.get("#party-horn-form").within(() => {
+      cy.get('input:invalid').should('have.length', 1);
+    })
+
+    cy.get("#volume-number").clear(0).type('-24057203948');
+    cy.get("#party-horn-form").within(() => {
+      cy.get('input:invalid').should('have.length', 1);
+    })
+  })
 })
